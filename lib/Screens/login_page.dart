@@ -1,0 +1,158 @@
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:unicode_lp/Screens/register_page.dart';
+import 'package:unicode_lp/constants.dart';
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Scaffold(
+      body: Stack(
+        children: [
+          Image.asset(
+            "Assets/login-bg.jpg",
+            width: screenWidth,
+            height: screenHeight,
+            fit: BoxFit.fill,
+          ),
+          BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+              child: Container(
+                width: screenWidth,
+                height: screenHeight,
+                decoration:
+                    BoxDecoration(color: Colors.grey.shade400.withOpacity(0.1)),
+              )),
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Neumorphic(
+                  margin: EdgeInsets.symmetric(horizontal: 30),
+                  style: NeumorphicStyle(
+                      shape: NeumorphicShape.concave,
+                      boxShape: NeumorphicBoxShape.roundRect(
+                          BorderRadius.circular(12)),
+                      depth: 8,
+                      lightSource: LightSource.topLeft,
+                      color: Colors.grey),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30, left: 15),
+                        child: Text(
+                          "Hello,",
+                          style: TextStyle(
+                              fontSize: 80,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          "Login Now!",
+                          style: TextStyle(fontSize: 30, color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 60,
+                      ),
+                      NeuBox(child: TextField(
+                        keyboardType: TextInputType.emailAddress,
+                        style: TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                            hintText: "Email",
+                            hintStyle: TextStyle(color: Colors.black),
+                            border: InputBorder.none),
+                      ),margin: EdgeInsets.all(20),
+                        padding: EdgeInsets.only(left: 15),),
+                      NeuBox(
+                        child: TextField(
+                          obscureText: true,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                              hintText: "Password",
+                              hintStyle: TextStyle(color: Colors.black),
+                              border: InputBorder.none),
+                        ),
+                        margin:
+                            EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                        padding: EdgeInsets.only(left: 15),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, bottom: 20),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Don't have an account?  ",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.white),
+                            ),
+                            GestureDetector(
+                              onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage()));},
+                              child: Text(
+                                "Register Now",
+                                style:
+                                    TextStyle(fontSize: 15, color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Center(
+                        child: Text("---OR---"),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          NeuBox(
+                            child: Center(
+                              child: Image.asset(
+                                "Assets/images.png",
+                                width: 30,
+                                height: 30,
+                              ),
+                            ),
+                            padding: EdgeInsets.all(10),
+                          ),
+                          NeuBox(
+                            child: Center(
+                              child: Image.asset(
+                                "Assets/f-logo.png",
+                                width: 30,
+                                height: 30,
+                              ),
+                            ),
+                            padding: EdgeInsets.all(10),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
