@@ -1,9 +1,9 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:unicode_lp/Screens/profile_page.dart';
-
 import '../constants.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -14,6 +14,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+
 
   bool isValidEmail(String input) {
     return RegExp(
@@ -27,6 +28,24 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   TextEditingController _confirmPassController = TextEditingController();
+
+  Future signUp() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(child: CircularProgressIndicator());
+        });
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passController.text.trim());
+    var User = await FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance.collection('Users').doc(User?.uid).set({
+      "First Name": _fNameController.text.trim(),
+      "Last Name": _lNameController.text.trim(),
+    });
+    Navigator.of(context).pop();
+  }
+
 
   @override
   void dispose() {
@@ -42,7 +61,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -200,7 +218,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: InkWell(
                             onTap: (){
                               if(_formKey.currentState!.validate()){
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ProfilePage(Name: "${_fNameController.text.trim()}  ${_lNameController.text.trim()}", email: _emailController.text.trim())));
+                                signUp();
                               }
                             },
                             child: SizedBox(

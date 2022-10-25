@@ -1,7 +1,10 @@
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:provider/provider.dart';
 import 'package:unicode_lp/Screens/register_page.dart';
+import 'package:unicode_lp/State%20Mgmt/g_sign_in.dart';
 import 'package:unicode_lp/constants.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,6 +32,44 @@ class _LoginPageState extends State<LoginPage> {
 
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
+    Future signIn() async {
+      try {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Center(child: CircularProgressIndicator());
+            });
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passController.text.trim());
+        Navigator.of(context).pop();
+      } catch (e) {
+        Navigator.of(context).pop();
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Center(child: Container(
+                  width: MediaQuery.of(context).size.width*0.6,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.white,
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(e.toString()),
+                      ElevatedButton(
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                          }, child: Text("OK", style: TextStyle(color: Colors.white),))
+                    ],
+                  )));
+            });
+      }
+    }
+
     return Scaffold(
       body: Stack(
         children: [
@@ -120,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: InkWell(
                               onTap: (){
                                 if(_formKeyLogin.currentState!.validate()){
-                                  print("Successful");
+                                  signIn();
                                 }
                               },
                               child: SizedBox(
@@ -162,15 +203,22 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            NeuBox(
-                              child: Center(
-                                child: Image.asset(
-                                  "Assets/images.png",
-                                  width: 30,
-                                  height: 30,
+                            GestureDetector(
+                              onTap: (){
+                                final provider = Provider.of<GoogleSignInProvider>(context,listen:false);
+                                provider.GoogleLogin();
+
+                              },
+                              child: NeuBox(
+                                child: Center(
+                                  child: Image.asset(
+                                    "Assets/images.png",
+                                    width: 30,
+                                    height: 30,
+                                  ),
                                 ),
+                                padding: EdgeInsets.all(10),
                               ),
-                              padding: EdgeInsets.all(10),
                             ),
                             NeuBox(
                               child: Center(
