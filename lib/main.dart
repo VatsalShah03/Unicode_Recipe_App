@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:unicode_lp/Screens/home_page.dart';
+import 'package:unicode_lp/Screens/main_page.dart';
 import 'package:unicode_lp/Screens/login_page.dart';
 import 'package:unicode_lp/State%20Mgmt/g_sign_in.dart';
 

@@ -13,6 +13,9 @@ class NeuBox extends StatelessWidget {
       padding: padding ?? EdgeInsets.zero,
       margin: margin ?? EdgeInsets.zero,
       style: NeumorphicStyle(
+        //shadowLightColor: Colors.orange,
+          shadowDarkColor: Colors.orange,
+          // shadowDarkColorEmboss: Colors.orange,
           shape: NeumorphicShape.concave,
           boxShape:
           NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
