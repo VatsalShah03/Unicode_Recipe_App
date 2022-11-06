@@ -21,7 +21,9 @@ class _ProfilePageState extends State<ProfilePage> {
   String? lName;
 
 
-  Future<List<String?>> GetUserDetails() async {
+  Future<List<String?>>
+
+  GetUserDetails() async {
     DocumentSnapshot ds = await userCollection.doc(user.uid).get();
     fName = ds.get("First Name");
     lName = ds.get("Last Name");

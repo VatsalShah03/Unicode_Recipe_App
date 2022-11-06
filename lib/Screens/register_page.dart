@@ -42,6 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
     await FirebaseFirestore.instance.collection('Users').doc(User?.uid).set({
       "First Name": _fNameController.text.trim(),
       "Last Name": _lNameController.text.trim(),
+      "Email":_emailController.text.trim(),
     });
     Navigator.of(context).pop();
   }

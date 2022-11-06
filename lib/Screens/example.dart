@@ -1,7 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 import 'package:unicode_lp/Screens/cuisines_page.dart';
 import 'package:unicode_lp/Screens/fav_page.dart';
 import 'package:unicode_lp/Screens/home_page.dart';
+import 'package:unicode_lp/Screens/profile_page.dart';
+
+import '../State Mgmt/g_sign_in.dart';
+import '../constants.dart';
 
 class NeumorphicBottomNavigation extends StatefulWidget {
   @override
@@ -67,7 +74,7 @@ class _NeumorphicBottomNavigationState
       child: IconTheme(
         data: IconThemeData(
           size: 25.0,
-          color: isSelected ? Colors.red[600] : Colors.grey[800],
+          color: isSelected ? Colors.orange : Colors.grey[800],
         ),
         child: item.icon as Widget,
       ),
@@ -76,9 +83,49 @@ class _NeumorphicBottomNavigationState
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
     return Scaffold(
+      drawer: SafeArea(child: MyDrawer()),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              color: Colors.grey[200],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Builder(
+                    builder: (context) => GestureDetector(
+                        onTap: () => Scaffold.of(context).openDrawer(),
+                        child: const NeuBox(
+                          padding: EdgeInsets.all(15),
+                          margin: EdgeInsets.only(left: 15, top: 15),
+                          child: Icon(Icons.menu),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Stack(alignment: Alignment.center, children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 30,
+                      ),
+                      CircleAvatar(
+                        backgroundImage: user?.photoURL == null
+                            ? AssetImage("Assets/person.png") as ImageProvider
+                            : NetworkImage(user!.photoURL!),
+                        radius: 25,
+                      )
+                    ]),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(child: _navigationScreens.elementAt(selectedIndex)),
+          ],
+        ),
+      ),
 
-      body: _navigationScreens.elementAt(selectedIndex),
       extendBody: true,
       bottomNavigationBar: Container(
         width: MediaQuery.of(context).size.width,
@@ -86,7 +133,9 @@ class _NeumorphicBottomNavigationState
         //margin: EdgeInsets.all(15),
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25), color: Colors.white),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+            color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: items.map((item) {
@@ -111,3 +160,69 @@ class NavigationItem {
 
   NavigationItem({this.icon});
 }
+
+class MyDrawer extends StatelessWidget {
+  const MyDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ListTile(
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()));
+            },
+            title: Text("My Profile"),
+          ),
+          GestureDetector(
+              onTap: () {
+                final provider =
+                    Provider.of<GoogleSignInProvider>(context, listen: false);
+                provider.logout();
+              },
+              child: NeuBox(
+                child: Text("Sign Out"),
+                margin: EdgeInsets.only(bottom: 15),
+                padding: EdgeInsets.all(10),
+              ))
+        ],
+      ),
+    );
+  }
+}
+
+// SafeArea(
+// child: Row(
+// mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// children: [
+// Builder(
+// builder: (context) => GestureDetector(
+// onTap: ()=> Scaffold.of(context).openDrawer(),
+// child: NeuBox(
+// child: Icon(Icons.menu),
+// padding: EdgeInsets.all(15),
+// margin: EdgeInsets.only(left: 15, top: 15),
+// )),
+// ),
+// Padding(
+// padding: const EdgeInsets.all(15.0),
+// child: Stack(alignment: Alignment.center, children: [
+// CircleAvatar(
+// backgroundColor: Colors.white,
+// radius: 30,
+// ),
+// CircleAvatar(
+// backgroundImage: user?.photoURL == null
+// ? AssetImage("Assets/person.png") as ImageProvider
+//     : NetworkImage(user!.photoURL!),
+// radius: 25,
+// )
+// ]),
+// ),
+// ],
+// ),
+// ),
