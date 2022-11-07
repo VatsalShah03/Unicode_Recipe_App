@@ -1,10 +1,15 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-
 import 'package:unicode_lp/api_services.dart';
+import 'package:unicode_lp/models.dart';
 import 'package:unicode_lp/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+
+
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,34 +19,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String? title;
-  String? imgUrl;
-  bool? isVeg;
 
-  ApiServices apiServices = ApiServices();
-  getData() async {
-    var responseBody;
-    String apiKey = "1b0f01b8eb9946beb0055f64095a985e";
-    String baseUrl = "https://api.spoonacular.com/recipes";
-    String url = "$baseUrl/random?number=5&apiKey=$apiKey&number=1";
-    http.Response response = await http.get(Uri.parse(url));
-    try {
-      if (response.statusCode == 200) {
-        responseBody = jsonDecode(response.body);
-        //log(responseBody.toString());
-        title = responseBody['recipes'][0]['title'];
-        imgUrl = responseBody['recipes'][0]['image'];
-        isVeg = responseBody['recipes'][0]['vegetarian'];
-        debugPrint(title);
-        debugPrint(imgUrl);
-        debugPrint(isVeg.toString());
-      } else {
-        print(response.statusCode);
-      }
-      return responseBody;
-    } catch (e) {
-      print(e);
-    }
+  List<Recipes>? _recipesList;
+
+  getRecipeData() async {
+    _recipesList = await ApiServices().getData();
+    print(_recipesList!.length);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getRecipeData();
+    super.initState();
   }
 
   @override
@@ -51,7 +41,7 @@ class _HomePageState extends State<HomePage> {
       extendBody: true,
       body: SafeArea(
         child: FutureBuilder(
-          future: getData(),
+          future: getRecipeData(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -72,12 +62,13 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: 5,
+                    itemCount: _recipesList!.length,
                     itemBuilder: (BuildContext context, int index) {
+                      Recipes recipe = _recipesList![index];
                       return RecipeWidget(
-                        title: title!,
-                        imgUrl: imgUrl!,
-                        isVeg: isVeg!,
+                        title: recipe.title!,
+                        imgUrl: recipe.image!,
+                        isVeg: recipe.vegetarian,
                       );
                     },
                   ),
