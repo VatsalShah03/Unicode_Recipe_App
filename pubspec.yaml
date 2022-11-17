@@ -40,6 +40,9 @@ dependencies:
   cloud_firestore:
   cupertino_icons: ^1.0.2
   http:
+  get:
+  html:
+  like_button:
 
 dev_dependencies:
   flutter_test:

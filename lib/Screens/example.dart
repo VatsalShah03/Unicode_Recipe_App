@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 import 'package:unicode_lp/Screens/cuisines_page.dart';
 import 'package:unicode_lp/Screens/fav_page.dart';
@@ -86,9 +87,11 @@ class _NeumorphicBottomNavigationState
     User? user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       drawer: SafeArea(child: MyDrawer()),
+
       body: SafeArea(
         child: Column(
           children: [
+
             Container(
               color: Colors.grey[200],
               child: Row(
@@ -121,6 +124,7 @@ class _NeumorphicBottomNavigationState
                 ],
               ),
             ),
+
             Expanded(child: _navigationScreens.elementAt(selectedIndex)),
           ],
         ),

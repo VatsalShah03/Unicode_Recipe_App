@@ -1,9 +1,10 @@
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
-import 'package:unicode_lp/Screens/register_page.dart';
+import 'package:unicode_lp/Screens/Auth/register_page.dart';
 import 'package:unicode_lp/State%20Mgmt/g_sign_in.dart';
 import 'package:unicode_lp/constants.dart';
 
@@ -204,10 +205,13 @@ class _LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             GestureDetector(
-                              onTap: (){
+                              onTap: () async {
                                 final provider = Provider.of<GoogleSignInProvider>(context,listen:false);
+                                await FirebaseFirestore.instance.collection('Users').doc(provider.user.id).set({
+                                  "First Name": provider.user.displayName,
+                                  "Email":provider.user.email,
+                                });
                                 provider.GoogleLogin();
-
                               },
                               child: NeuBox(
                                 child: Center(

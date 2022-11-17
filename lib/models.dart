@@ -1,4 +1,4 @@
-
+import 'dart:core';
 class RecipesMain {
   RecipesMain({
     required this.recipes,
@@ -18,6 +18,7 @@ class RecipesMain {
 
 class Recipes {
   Recipes({
+    required this.liked,
     required this.vegetarian,
     required this.vegan,
     required this.glutenFree,
@@ -55,6 +56,7 @@ class Recipes {
     this.originalId,
     required this.spoonacularSourceUrl,
   });
+   bool liked = false;
   late final bool vegetarian;
   late final bool vegan;
   late final bool glutenFree;
@@ -412,3 +414,17 @@ class Equipment {
     return _data;
   }
 }
+
+// class WishListModel {
+//   String? wishlistTitle;
+//   String? wishlistSummary;
+//   String? wishlistImage;
+//   String? wishlistInstructions;
+//
+//   WishlistModel({
+//     required this.wishlistTitle,
+//     required this.wishlistSummary,
+//     required this.wishlistImage,
+//     required this.wishlisttime,
+//   });
+// }

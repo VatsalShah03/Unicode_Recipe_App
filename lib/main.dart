@@ -4,7 +4,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:unicode_lp/Screens/main_page.dart';
-import 'package:unicode_lp/Screens/login_page.dart';
+import 'package:unicode_lp/Screens/Auth/login_page.dart';
 import 'package:unicode_lp/State%20Mgmt/g_sign_in.dart';
 
 void main() async{
@@ -27,8 +27,6 @@ class _MyAppState extends State<MyApp> {
       create: (context)=> GoogleSignInProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-
-
         theme: ThemeData(
           fontFamily: GoogleFonts.poppins().fontFamily
         ),

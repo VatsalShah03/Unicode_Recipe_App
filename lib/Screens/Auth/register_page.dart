@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import '../constants.dart';
+import '../../constants.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -44,6 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
       "Last Name": _lNameController.text.trim(),
       "Email":_emailController.text.trim(),
     });
+    Navigator.of(context).pop();
     Navigator.of(context).pop();
   }
 
