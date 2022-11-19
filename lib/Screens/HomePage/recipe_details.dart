@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unicode_lp/State%20Mgmt/home_controller.dart';
+import 'package:like_button/like_button.dart';
+import 'package:unicode_lp/Screens/HomePage/home_controller.dart';
 import 'package:unicode_lp/constants.dart';
 import 'package:html/parser.dart';
 
-import '../models.dart';
+import 'models.dart';
 
 class RecipeDetails extends StatefulWidget {
   final Recipes? recipeee;
@@ -29,6 +30,11 @@ class RecipeDetails extends StatefulWidget {
 
 class _RecipeDetailsState extends State<RecipeDetails> {
   HomeController homeController = Get.put(HomeController());
+  Future<bool> onLikeTapped(isLiked) async {
+    await homeController.addToWishlist(recipe: widget.recipeee!);
+    return !isLiked;
+  }
+  var isLiked = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +72,11 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                           homeController.addToWishlist(recipe: widget.recipeee!);
                         },
                         child: NeuBox(
-                            padding: EdgeInsets.all(15),
+                            padding: EdgeInsets.all(12),
                             margin: EdgeInsets.only(right: 15, top: 15),
-                            child: Icon(Icons.favorite_border)),
+                            child: LikeButton(
+                              onTap: onLikeTapped,
+                            ),),
                       ),
                     ],
                   ),

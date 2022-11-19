@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
-import 'package:unicode_lp/State%20Mgmt/home_controller.dart';
+import 'package:unicode_lp/Screens/HomePage/home_controller.dart';
 import '';
 import '../constants.dart';
 
@@ -16,11 +16,7 @@ class FavPage extends StatefulWidget {
 
 class _FavPageState extends State<FavPage> {
   HomeController homeController = Get.put(HomeController());
-  // Stream<QuerySnapshot> wishlist = FirebaseFirestore.instance
-  //     .collection("Users")
-  //     .doc(FirebaseAuth.instance.currentUser?.uid)
-  //     .collection("Favourites")
-  //     .snapshots();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -35,12 +31,12 @@ class _FavPageState extends State<FavPage> {
 
   @override
   Widget build(BuildContext context) {
-    HomeController homeController = Get.find();
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(15.0),

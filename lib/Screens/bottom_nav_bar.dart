@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
-import 'package:unicode_lp/Screens/cuisines_page.dart';
+import 'package:unicode_lp/Screens/Cuisines/cuisines_page.dart';
 import 'package:unicode_lp/Screens/fav_page.dart';
-import 'package:unicode_lp/Screens/home_page.dart';
+import 'package:unicode_lp/Screens/HomePage/home_page.dart';
 import 'package:unicode_lp/Screens/profile_page.dart';
 
 import '../State Mgmt/g_sign_in.dart';
@@ -92,6 +92,7 @@ class _NeumorphicBottomNavigationState
         child: Column(
           children: [
 
+            //App Bar
             Container(
               color: Colors.grey[200],
               child: Row(
@@ -102,7 +103,7 @@ class _NeumorphicBottomNavigationState
                         onTap: () => Scaffold.of(context).openDrawer(),
                         child: const NeuBox(
                           padding: EdgeInsets.all(15),
-                          margin: EdgeInsets.only(left: 15, top: 15),
+                          margin: EdgeInsets.only(left: 15),
                           child: Icon(Icons.menu),
                         )),
                   ),
@@ -180,7 +181,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ProfilePage()));
             },
-            title: Text("My Profile"),
+            title: Text("My Profile", style: TextStyle(fontSize: 25),),
           ),
           GestureDetector(
               onTap: () {
@@ -199,34 +200,3 @@ class MyDrawer extends StatelessWidget {
   }
 }
 
-// SafeArea(
-// child: Row(
-// mainAxisAlignment: MainAxisAlignment.spaceBetween,
-// children: [
-// Builder(
-// builder: (context) => GestureDetector(
-// onTap: ()=> Scaffold.of(context).openDrawer(),
-// child: NeuBox(
-// child: Icon(Icons.menu),
-// padding: EdgeInsets.all(15),
-// margin: EdgeInsets.only(left: 15, top: 15),
-// )),
-// ),
-// Padding(
-// padding: const EdgeInsets.all(15.0),
-// child: Stack(alignment: Alignment.center, children: [
-// CircleAvatar(
-// backgroundColor: Colors.white,
-// radius: 30,
-// ),
-// CircleAvatar(
-// backgroundImage: user?.photoURL == null
-// ? AssetImage("Assets/person.png") as ImageProvider
-//     : NetworkImage(user!.photoURL!),
-// radius: 25,
-// )
-// ]),
-// ),
-// ],
-// ),
-// ),

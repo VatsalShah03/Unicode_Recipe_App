@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:unicode_lp/Screens/Auth/login_page.dart';
 import 'package:unicode_lp/Screens/profile_page.dart';
 
-import 'example.dart';
+import 'bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

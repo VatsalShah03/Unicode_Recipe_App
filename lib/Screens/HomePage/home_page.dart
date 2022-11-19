@@ -1,16 +1,10 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:like_button/like_button.dart';
-import 'package:unicode_lp/Screens/profile_page.dart';
-import 'package:unicode_lp/Screens/recipe_details.dart';
-import 'package:unicode_lp/State%20Mgmt/home_controller.dart';
-import 'package:unicode_lp/api_services.dart';
-import 'package:unicode_lp/models.dart';
+import 'package:unicode_lp/Screens/HomePage/recipe_details.dart';
+import 'package:unicode_lp/Screens/HomePage/home_controller.dart';
+import 'package:unicode_lp/Screens/HomePage/models.dart';
 import 'package:unicode_lp/constants.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 
 class HomePage extends StatefulWidget {
@@ -91,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                         itemCount: homeController.recipes.length,
                         itemBuilder: (BuildContext context, int index) {
                           Recipes recipe = homeController.recipes[index];
-                          print(recipe.title);
+                          //print(recipe.title);
                           return RecipeWidget(
                             recipe: recipe,
                           );
