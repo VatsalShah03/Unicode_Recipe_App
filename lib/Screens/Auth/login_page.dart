@@ -30,6 +30,18 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
 
+    Future<bool> checkIfDocExists(String docId) async {
+      try {
+        var collectionRef = FirebaseFirestore.instance.collection('Users');
+        var doc = await collectionRef.doc(docId).get();
+        print(doc.exists);
+        print(doc.exists);
+        return doc.exists;
+      } catch (e) {
+        throw e;
+      }
+    }
+
 
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
@@ -207,11 +219,20 @@ class _LoginPageState extends State<LoginPage> {
                             GestureDetector(
                               onTap: () async {
                                 final provider = Provider.of<GoogleSignInProvider>(context,listen:false);
-                                await FirebaseFirestore.instance.collection('Users').doc(provider.user.id).set({
-                                  "First Name": provider.user.displayName,
-                                  "Email":provider.user.email,
-                                });
                                 provider.GoogleLogin();
+                                final firebaseUser = FirebaseAuth.instance.currentUser!;
+                                bool docExists = await checkIfDocExists(firebaseUser.uid);
+                                print(docExists);
+                                if(docExists){
+
+                                }
+                                else{
+                                  print(firebaseUser.uid);
+                                  await FirebaseFirestore.instance.collection('Users').doc(firebaseUser.uid).set({
+                                    "First Name": provider.user.displayName,
+                                    "Email":provider.user.email,
+                                  });
+                                }
                               },
                               child: NeuBox(
                                 child: Center(

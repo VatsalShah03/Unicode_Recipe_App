@@ -8,7 +8,7 @@ import 'package:html/parser.dart';
 import 'models.dart';
 
 class RecipeDetails extends StatefulWidget {
-  final Recipes? recipeee;
+  final Recipes recipeee;
   final String? id;
   final String? imgUrl;
   final String? title;
@@ -31,7 +31,12 @@ class RecipeDetails extends StatefulWidget {
 class _RecipeDetailsState extends State<RecipeDetails> {
   HomeController homeController = Get.put(HomeController());
   Future<bool> onLikeTapped(isLiked) async {
-    await homeController.addToWishlist(recipe: widget.recipeee!);
+    if(isLiked){
+      homeController.deleteFromWishlist(docid: widget.recipeee.id.toString());
+    }
+    else{
+      await homeController.addToWishlist(recipe: widget.recipeee);
+    }
     return !isLiked;
   }
   var isLiked = false.obs;

@@ -114,13 +114,24 @@ class RecipeWidget extends StatefulWidget {
 
 class _RecipeWidgetState extends State<RecipeWidget> {
   HomeController homeController = Get.put(HomeController());
+  String isVegetarian = '';
   Future<bool> onLikeTapped(isLiked) async {
-    await homeController.addToWishlist(recipe: widget.recipe);
+    if(isLiked){
+      homeController.deleteFromWishlist(docid: widget.recipe.id.toString());
+    }
+    else{
+      await homeController.addToWishlist(recipe: widget.recipe);
+    }
     return !isLiked;
   }
+
+
   var isLiked = false.obs;
   @override
   Widget build(BuildContext context) {
+    if(widget.recipe.vegetarian!=null){
+      isVegetarian = widget.recipe.vegetarian ? "Vegetarian": "Non-Vegetarian";
+    }
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -164,7 +175,7 @@ class _RecipeWidgetState extends State<RecipeWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    widget.recipe.vegetarian
+                    isVegetarian == "Vegetarian"
                         ? Text("Vegetarian",
                             style: TextStyle(color: Colors.green))
                         : Text("Non-Vegetarian",
