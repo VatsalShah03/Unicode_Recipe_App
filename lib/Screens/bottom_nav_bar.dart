@@ -4,12 +4,14 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 import 'package:unicode_lp/Screens/Cuisines/cuisines_page.dart';
+import 'package:unicode_lp/Screens/My%20Recipes/my_recipes.dart';
 import 'package:unicode_lp/Screens/fav_page.dart';
 import 'package:unicode_lp/Screens/HomePage/home_page.dart';
-import 'package:unicode_lp/Screens/profile_page.dart';
+import 'package:unicode_lp/Screens/Profile%20Page/profile_page.dart';
 
 import '../State Mgmt/g_sign_in.dart';
 import '../constants.dart';
+import 'Add Recipes/add_recipes.dart';
 
 class NeumorphicBottomNavigation extends StatefulWidget {
   @override
@@ -25,6 +27,7 @@ class _NeumorphicBottomNavigationState
     HomePage(),
     FavPage(),
     CuisinesPage(),
+    MyRecipes(),
   ];
 
   List<NavigationItem> items = [
@@ -37,6 +40,7 @@ class _NeumorphicBottomNavigationState
     NavigationItem(
       icon: Icon(Icons.fastfood),
     ),
+    NavigationItem(icon: Icon(Icons.list))
   ];
 
   Widget _buildItem(NavigationItem item, bool isSelected) {
@@ -87,11 +91,9 @@ class _NeumorphicBottomNavigationState
     User? user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       drawer: SafeArea(child: MyDrawer()),
-
       body: SafeArea(
         child: Column(
           children: [
-
             //App Bar
             Container(
               color: Colors.grey[200],
@@ -107,21 +109,17 @@ class _NeumorphicBottomNavigationState
                           child: Icon(Icons.menu),
                         )),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Stack(alignment: Alignment.center, children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 30,
-                      ),
-                      CircleAvatar(
-                        backgroundImage: user?.photoURL == null
-                            ? AssetImage("Assets/person.png") as ImageProvider
-                            : NetworkImage(user!.photoURL!),
-                        radius: 25,
-                      )
-                    ]),
-                  ),
+                  NeuBox(
+                      margin: EdgeInsets.all(15),
+                      child: IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddRecipe()));
+                        },
+                      ))
                 ],
               ),
             ),
@@ -130,7 +128,6 @@ class _NeumorphicBottomNavigationState
           ],
         ),
       ),
-
       extendBody: true,
       bottomNavigationBar: Container(
         width: MediaQuery.of(context).size.width,
@@ -181,7 +178,10 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ProfilePage()));
             },
-            title: Text("My Profile", style: TextStyle(fontSize: 25),),
+            title: Text(
+              "My Profile",
+              style: TextStyle(fontSize: 25),
+            ),
           ),
           GestureDetector(
               onTap: () {
@@ -199,4 +199,3 @@ class MyDrawer extends StatelessWidget {
     );
   }
 }
-

@@ -43,6 +43,9 @@ dependencies:
   get:
   html:
   like_button:
+  image_picker:
+  smooth_page_indicator:
+  firebase_storage:
 
 dev_dependencies:
   flutter_test:

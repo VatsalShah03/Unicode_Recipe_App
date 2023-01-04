@@ -115,6 +115,7 @@ class RecipeWidget extends StatefulWidget {
 class _RecipeWidgetState extends State<RecipeWidget> {
   HomeController homeController = Get.put(HomeController());
   String isVegetarian = '';
+
   Future<bool> onLikeTapped(isLiked) async {
     if(isLiked){
       homeController.deleteFromWishlist(docid: widget.recipe.id.toString());
