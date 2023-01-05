@@ -71,6 +71,10 @@ class HomeController extends GetxController{
     await FirebaseFirestore.instance.collection("Users").doc(uid).collection("Favourites").doc(docid).delete();
   }
 
+  deleteFromMyRecipes({required String docid}) async {
+    await FirebaseFirestore.instance.collection("Users").doc(uid).collection("My Recipes").doc(docid).delete();
+  }
+
   Stream<List<WishList>> fetchWishList() {
     return FirebaseFirestore.instance.collection("Users").doc(uid).collection("Favourites").snapshots().map(
             (snapshot) =>
@@ -85,9 +89,11 @@ class WishList {
   final String title;
   final bool isVeg;
   final String docid;
+  final String? ingredients;
 
   WishList(
       {this.id = '',
+        this.ingredients,
         required this.Summary,
         required this.image,
         required this.isVeg,
@@ -101,6 +107,7 @@ class WishList {
     'Title': title,
     'ImageUrl': image,
     'Docid': docid,
+    "Ingredients": ingredients,
   };
 
   static WishList fromJson(Map<String, dynamic> json) => WishList(
@@ -110,6 +117,7 @@ class WishList {
     image: json["ImageUrl"],
     docid: json["Docid"].toString(),
     id: json['Id'].toString(),
+    ingredients: json["Ingredients"],
   );
 }
 

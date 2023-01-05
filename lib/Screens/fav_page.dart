@@ -17,10 +17,6 @@ class FavPage extends StatefulWidget {
 class _FavPageState extends State<FavPage> {
   HomeController homeController = Get.put(HomeController());
 
-  @override
-  void initState() {
-    // TODO: implement initState
-  }
   Stream<List<WishList>> fetchWishList() => FirebaseFirestore.instance
       .collection("Users")
       .doc(FirebaseAuth.instance.currentUser?.uid)

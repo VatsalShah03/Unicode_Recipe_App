@@ -164,7 +164,8 @@ class NavigationItem {
 }
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+  final user = FirebaseAuth.instance.currentUser!;
+  MyDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +173,13 @@ class MyDrawer extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          SizedBox(height: 10,),
+          CircleAvatar(
+            backgroundImage: user.photoURL == null
+                ? AssetImage("Assets/person.png") as ImageProvider
+                : NetworkImage(user.photoURL!),
+            radius: 100,
+          ),
           ListTile(
             trailing: Icon(Icons.chevron_right),
             onTap: () {

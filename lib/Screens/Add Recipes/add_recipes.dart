@@ -24,6 +24,7 @@ class _AddRecipeState extends State<AddRecipe> {
   TextEditingController titleController = TextEditingController();
   TextEditingController ingredientsController = TextEditingController();
   TextEditingController summaryController = TextEditingController();
+  bool isVeg = true;
 
   Future clickImage({required ImageSource imageSource}) async {
     try {
@@ -47,12 +48,13 @@ class _AddRecipeState extends State<AddRecipe> {
     if (image != null) {
       await ref.putFile(File(image!.path)).whenComplete(() async {
         await ref.getDownloadURL().then((value) async {
-          await userCollection.doc(uid).collection("My Recipes").add({
-            "Pic": value,
+          final docRef = await userCollection.doc(uid).collection("My Recipes").doc();
+          await docRef.set({"ImageUrl": value,
             "Title": titleController.text.trim(),
             "Ingredients": ingredientsController.text.trim(),
             "Summary": summaryController.text.trim(),
-          });
+            "isVeg": isVeg,
+          "Id": docRef.id});
         });
       });
     }
@@ -158,6 +160,21 @@ class _AddRecipeState extends State<AddRecipe> {
                             border: InputBorder.none,
                             hintText: "Enter Summary"),
                       )),
+                  NeuBox(
+                    margin: EdgeInsets.only(left: 30,right: 30,top: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Vegetarian : "),
+                      Checkbox(
+                          value: isVeg,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isVeg = value!;
+                            });
+                          })
+                    ],
+                  )),
                   Center(
                     child: GestureDetector(
                       onTap: () {
@@ -167,6 +184,7 @@ class _AddRecipeState extends State<AddRecipe> {
                                   child: CircularProgressIndicator(),
                                 ));
                         uploadImage().whenComplete(() {
+                          Navigator.pop(context);
                           Navigator.pop(context);
                         });
                       },
