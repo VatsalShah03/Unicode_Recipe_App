@@ -34,6 +34,7 @@ class _CuisinesPageState extends State<CuisinesPage> {
       backgroundColor: Colors.grey[200],
       body: SafeArea(
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
         children: [

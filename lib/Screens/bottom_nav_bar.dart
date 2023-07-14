@@ -5,10 +5,10 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 import 'package:unicode_lp/Screens/Cuisines/cuisines_page.dart';
 import 'package:unicode_lp/Screens/My%20Recipes/my_recipes.dart';
+import 'package:unicode_lp/Screens/Search/search_page.dart';
 import 'package:unicode_lp/Screens/fav_page.dart';
 import 'package:unicode_lp/Screens/HomePage/home_page.dart';
 import 'package:unicode_lp/Screens/Profile%20Page/profile_page.dart';
-
 import '../State Mgmt/g_sign_in.dart';
 import '../constants.dart';
 import 'Add Recipes/add_recipes.dart';
@@ -26,6 +26,7 @@ class _NeumorphicBottomNavigationState
   List<Widget> _navigationScreens = [
     HomePage(),
     FavPage(),
+    SearchPage(),
     CuisinesPage(),
     MyRecipes(),
   ];
@@ -36,6 +37,9 @@ class _NeumorphicBottomNavigationState
     ),
     NavigationItem(
       icon: Icon(Icons.favorite),
+    ),
+    NavigationItem(
+      icon: Icon(Icons.search)
     ),
     NavigationItem(
       icon: Icon(Icons.fastfood),
@@ -88,7 +92,7 @@ class _NeumorphicBottomNavigationState
 
   @override
   Widget build(BuildContext context) {
-    User? user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       drawer: SafeArea(child: MyDrawer()),
       body: SafeArea(

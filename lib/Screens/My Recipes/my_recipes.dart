@@ -59,7 +59,6 @@ class _MyRecipesState extends State<MyRecipes> {
                             itemBuilder: (context, index) {
                               WishList wishList = snapshot.data![index];
                               print(wishList.docid);
-                              print(snapshot.data!.length);
                               return buildMyRecipes(wishList: wishList, docid: wishList.id);
                             });
                       } else if (snapshot.hasError) {

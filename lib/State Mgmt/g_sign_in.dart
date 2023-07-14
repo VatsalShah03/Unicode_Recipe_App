@@ -23,7 +23,6 @@ class GoogleSignInProvider extends ChangeNotifier {
       "Email":_user?.email,
     });
     notifyListeners();
-
   }
 
   Future logout() async {

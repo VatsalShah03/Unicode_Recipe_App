@@ -9,7 +9,7 @@ class CuisinesController extends GetxController{
   var results = <Results>[];
 
   Future<List<Results>> getCuisinesData({required String cuisine}) async {
-    String apiKey = "d8c5f57273584c9198aa22b0462a8f38";
+    String apiKey = "eb1dcac904fd4b75aab240404419274e";
     String baseUrl = "https://api.spoonacular.com/recipes/complexSearch";
     String url = "$baseUrl?cuisine=$cuisine&apiKey=$apiKey";
     http.Response response = await http.get(Uri.parse(url));
